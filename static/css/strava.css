@@ -26,11 +26,24 @@
 }
 
 .month {
-    width: 95%;
-    height: 150px;
+    width: 100%;
+    height: 132px;
     margin-bottom: 10px;
     display: grid; 
     grid-template-columns: repeat(7, 1fr);
+}
+
+.monthcontainer{
+    width: 95%;
+    height: 150px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.monthtext{
+    font-weight: bold;
+    font-size: large;
+    font-family: Arial, sans-serif;
 }
 
 
