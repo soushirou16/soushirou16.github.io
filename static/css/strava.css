@@ -30,7 +30,7 @@
     height: 150px;
     margin-bottom: 10px;
     display: grid; 
-    grid-template-columns: repeat(7, 1fr); 
+    grid-template-columns: repeat(7, 1fr);
 }
 
 
@@ -67,3 +67,12 @@
     background-color: #1D340B;
 }
 
+#moreInfoDiv {
+    position: absolute;
+    top: 50px;
+    left: 480px; 
+    width: 200px;
+    height: 200px;
+    background-color: #DEDEDE;
+    border-radius: 10px;
+  }

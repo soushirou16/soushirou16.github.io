@@ -56,7 +56,7 @@ def callback():
 def get_activities():
     # Ensure the user is authenticated
     if 'access_token' not in cache:
-        return 'Not authenticated', 401
+        return 'not auth'
 
     strava = OAuth2Session(client_id, token=cache)
 

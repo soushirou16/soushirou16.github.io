@@ -1,0 +1,15 @@
+Contains duplicate (5/15)
+Did:
+Create a dictionary, added all terms into it. If an element already exists in the dictionary, duplicate found
+Better sol:
+Compare the length of the array that's been casted into a set, and the actual array. set() will remove all duplicates. 
+
+Valid Anagram (5/15)
+Did:
+Create 2 dictionaries. Compared them.
+
+Two Sum (5/15)
+Did:
+Create a dictionary storing the difference and num required
+
+
