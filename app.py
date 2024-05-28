@@ -1,7 +1,5 @@
 from flask import Flask, request, redirect, url_for, session, jsonify, render_template
 from requests_oauthlib import OAuth2Session
-import requests
-import webbrowser
 import json
 
 cache={}
