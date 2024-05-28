@@ -85,9 +85,10 @@
     top: 90px;
     left: 0px; 
     width: 200px;
-    height: 200px;
-    background-color: #DEDEDE;
+    height: 120px;
+    background-color: #EFEFEF;
     border-radius: 10px;
     opacity: 0;
+    border: 2px solid #6B6B6B;
     transition: opacity 0.3s ease;
   }
