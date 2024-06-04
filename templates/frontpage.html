@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strava Visualizer</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/frontpage.css">
+    <script defer src="/static/js/frontpage.js"></script>
+    <style>
+        body {
+            background-color: #2C282F;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="filter">
+        <div id="filtertextbox">
+            <button id="button"></button>
+            <p class="text">Hi hello welcome</p>
+            <p class="text">Visualize your 2024 strava performance</p>
+            <p class="text">enjs</p>
+        </div>
+    </div>
+    
+    <h1 class="words">2024 Strava Activity Tracker</h1>
+
+    <div class="container">
+        <div class="monthcontainer">
+            <h class="monthtext">January</h>
+            <div id = "1" class="month">
+                <div class="days" id="M1_D1"></div>
+                <div class="days" id="M1_D2"></div>
+                <div class="days" id="M1_D3"></div>
+                <div class="days" id="M1_D4"></div>
+                <div class="days" id="M1_D5"></div>
+                <div class="days" id="M1_D6"></div>
+                <div class="days" id="M1_D7"></div>
+                <div class="days" id="M1_D8"></div>
+                <div class="days" id="M1_D9"></div>
+                <div class="days" id="M1_D10"></div>
+                <div class="days" id="M1_D11"></div>
+                <div class="days" id="M1_D12"></div>
+                <div class="days" id="M1_D13"></div>
+                <div class="days" id="M1_D14"></div>
+                <div class="days" id="M1_D15"></div>
+                <div class="days" id="M1_D16"></div>
+                <div class="days" id="M1_D17"></div>
+                <div class="days" id="M1_D18"></div>
+                <div class="days" id="M1_D19"></div>
+                <div class="days" id="M1_D20"></div>
+                <div class="days" id="M1_D21"></div>
+                <div class="days" id="M1_D22"></div>
+                <div class="days" id="M1_D23"></div>
+                <div class="days" id="M1_D24"></div>
+                <div class="days" id="M1_D25"></div>
+                <div class="days" id="M1_D26"></div>
+                <div class="days" id="M1_D27"></div>
+                <div class="days" id="M1_D28"></div>
+                <div class="days" id="M1_D29"></div>
+                <div class="days" id="M1_D30"></div>
+                <div class="days" id="M1_D31"></div>
+            </div>
+        </div>
+        <div class="monthcontainer">
+            <h class="monthtext">February</h>
+            <div id = "2" class="month">
+                <div class="days" id="M2_D1"></div>
+                <div class="days" id="M2_D2"></div>
+                <div class="days" id="M2_D3"></div>
+                <div class="days" id="M2_D4"></div>
+                <div class="days" id="M2_D5"></div>
+                <div class="days" id="M2_D6"></div>
+                <div class="days" id="M2_D7"></div>
+                <div class="days" id="M2_D8"></div>
+                <div class="days" id="M2_D9"></div>
+                <div class="days" id="M2_D10"></div>
+                <div class="days" id="M2_D11"></div>
+                <div class="days" id="M2_D12"></div>
+                <div class="days" id="M2_D13"></div>
+                <div class="days" id="M2_D14"></div>
+                <div class="days" id="M2_D15"></div>
+                <div class="days" id="M2_D16"></div>
+                <div class="days" id="M2_D17"></div>
+                <div class="days" id="M2_D18"></div>
+                <div class="days" id="M2_D19"></div>
+                <div class="days" id="M2_D20"></div>
+                <div class="days" id="M2_D21"></div>
+                <div class="days" id="M2_D22"></div>
+                <div class="days" id="M2_D23"></div>
+                <div class="days" id="M2_D24"></div>
+                <div class="days" id="M2_D25"></div>
+                <div class="days" id="M2_D26"></div>
+                <div class="days" id="M2_D27"></div>
+                <div class="days" id="M2_D28"></div>
+                <div class="days" id="M2_D29"></div>
+            </div>
+        </div>
+        <div class="monthcontainer">
+            <h class="monthtext">March</h>
+            <div id = "3" class="month">
+                <div class="days" id="M3_D1"></div>
+                <div class="days" id="M3_D2"></div>
+                <div class="days" id="M3_D3"></div>
+                <div class="days" id="M3_D4"></div>
+                <div class="days" id="M3_D5"></div>
+                <div class="days" id="M3_D6"></div>
+                <div class="days" id="M3_D7"></div>
+                <div class="days" id="M3_D8"></div>
+                <div class="days" id="M3_D9"></div>
+                <div class="days" id="M3_D10"></div>
+                <div class="days" id="M3_D11"></div>
+                <div class="days" id="M3_D12"></div>
+                <div class="days" id="M3_D13"></div>
+                <div class="days" id="M3_D14"></div>
+                <div class="days" id="M3_D15"></div>
+                <div class="days" id="M3_D16"></div>
+                <div class="days" id="M3_D17"></div>
+                <div class="days" id="M3_D18"></div>
+                <div class="days" id="M3_D19"></div>
+                <div class="days" id="M3_D20"></div>
+                <div class="days" id="M3_D21"></div>
+                <div class="days" id="M3_D22"></div>
+                <div class="days" id="M3_D23"></div>
+                <div class="days" id="M3_D24"></div>
+                <div class="days" id="M3_D25"></div>
+                <div class="days" id="M3_D26"></div>
+                <div class="days" id="M3_D27"></div>
+                <div class="days" id="M3_D28"></div>
+                <div class="days" id="M3_D29"></div>
+                <div class="days" id="M3_D30"></div>
+                <div class="days" id="M3_D31"></div>
+            </div>
+        </div>
+        <div class="monthcontainer">
+            <h class="monthtext">April</h>
+            <div id = "4" class="month">
+                <div class="days" id="M4_D1"></div>
+                <div class="days" id="M4_D2"></div>
+                <div class="days" id="M4_D3"></div>
+                <div class="days" id="M4_D4"></div>
+                <div class="days" id="M4_D5"></div>
+                <div class="days" id="M4_D6"></div>
+                <div class="days" id="M4_D7"></div>
+                <div class="days" id="M4_D8"></div>
+                <div class="days" id="M4_D9"></div>
+                <div class="days" id="M4_D10"></div>
+                <div class="days" id="M4_D11"></div>
+                <div class="days" id="M4_D12"></div>
+                <div class="days" id="M4_D13"></div>
+                <div class="days" id="M4_D14"></div>
+                <div class="days" id="M4_D15"></div>
+                <div class="days" id="M4_D16"></div>
+                <div class="days" id="M4_D17"></div>
+                <div class="days" id="M4_D18"></div>
+                <div class="days" id="M4_D19"></div>
+                <div class="days" id="M4_D20"></div>
+                <div class="days" id="M4_D21"></div>
+                <div class="days" id="M4_D22"></div>
+                <div class="days" id="M4_D23"></div>
+                <div class="days" id="M4_D24"></div>
+                <div class="days" id="M4_D25"></div>
+                <div class="days" id="M4_D26"></div>
+                <div class="days" id="M4_D27"></div>
+                <div class="days" id="M4_D28"></div>
+                <div class="days" id="M4_D29"></div>
+                <div class="days" id="M4_D30"></div>
+                
+            </div>
+        </div>
+        <div class="monthcontainer">
+            <h class="monthtext">May</h>
+            <div id = "5" class="month">
+                <div class="days" id="M5_D1"></div>
+                <div class="days" id="M5_D2"></div>
+                <div class="days" id="M5_D3"></div>
+                <div class="days" id="M5_D4"></div>
+                <div class="days" id="M5_D5"></div>
+                <div class="days" id="M5_D6"></div>
+                <div class="days" id="M5_D7"></div>
+                <div class="days" id="M5_D8"></div>
+                <div class="days" id="M5_D9"></div>
+                <div class="days" id="M5_D10"></div>
+                <div class="days" id="M5_D11"></div>
+                <div class="days" id="M5_D12"></div>
+                <div class="days" id="M5_D13"></div>
+                <div class="days" id="M5_D14"></div>
+                <div class="days" id="M5_D15"></div>
+                <div class="days" id="M5_D16"></div>
+                <div class="days" id="M5_D17"></div>
+                <div class="days" id="M5_D18"></div>
+                <div class="days" id="M5_D19"></div>
+                <div class="days" id="M5_D20"></div>
+                <div class="days" id="M5_D21"></div>
+                <div class="days" id="M5_D22"></div>
+                <div class="days" id="M5_D23"></div>
+                <div class="days" id="M5_D24"></div>
+                <div class="days" id="M5_D25"></div>
+                <div class="days" id="M5_D26"></div>
+                <div class="days" id="M5_D27"></div>
+                <div class="days" id="M5_D28"></div>
+                <div class="days" id="M5_D29"></div>
+                <div class="days" id="M5_D30"></div>
+                <div class="days" id="M5_D31"></div>
+                
+            </div>
+        </div>
+        <div class="monthcontainer">
+            <h class="monthtext">June</h>
+            <div id = "6" class="month">
+                <div class="days" id="M6_D1"></div>
+                <div class="days" id="M6_D2"></div>
+                <div class="days" id="M6_D3"></div>
+                <div class="days" id="M6_D4"></div>
+                <div class="days" id="M6_D5"></div>
+                <div class="days" id="M6_D6"></div>
+                <div class="days" id="M6_D7"></div>
+                <div class="days" id="M6_D8"></div>
+                <div class="days" id="M6_D9"></div>
+                <div class="days" id="M6_D10"></div>
+                <div class="days" id="M6_D11"></div>
+                <div class="days" id="M6_D12"></div>
+                <div class="days" id="M6_D13"></div>
+                <div class="days" id="M6_D14"></div>
+                <div class="days" id="M6_D15"></div>
+                <div class="days" id="M6_D16"></div>
+                <div class="days" id="M6_D17"></div>
+                <div class="days" id="M6_D18"></div>
+                <div class="days" id="M6_D19"></div>
+                <div class="days" id="M6_D20"></div>
+                <div class="days" id="M6_D21"></div>
+                <div class="days" id="M6_D22"></div>
+                <div class="days" id="M6_D23"></div>
+                <div class="days" id="M6_D24"></div>
+                <div class="days" id="M6_D25"></div>
+                <div class="days" id="M6_D26"></div>
+                <div class="days" id="M6_D27"></div>
+                <div class="days" id="M6_D28"></div>
+                <div class="days" id="M6_D29"></div>
+                <div class="days" id="M6_D30"></div>
+                
+            </div>
+        </div>
+        <div class="monthcontainer">
+            <h class="monthtext">July</h>
+            <div id = "7" class="month">
+                <div class="days" id="M7_D1"></div>
+                <div class="days" id="M7_D2"></div>
+                <div class="days" id="M7_D3"></div>
+                <div class="days" id="M7_D4"></div>
+                <div class="days" id="M7_D5"></div>
+                <div class="days" id="M7_D6"></div>
+                <div class="days" id="M7_D7"></div>
+                <div class="days" id="M7_D8"></div>
+                <div class="days" id="M7_D9"></div>
+                <div class="days" id="M7_D10"></div>
+                <div class="days" id="M7_D11"></div>
+                <div class="days" id="M7_D12"></div>
+                <div class="days" id="M7_D13"></div>
+                <div class="days" id="M7_D14"></div>
+                <div class="days" id="M7_D15"></div>
+                <div class="days" id="M7_D16"></div>
+                <div class="days" id="M7_D17"></div>
+                <div class="days" id="M7_D18"></div>
+                <div class="days" id="M7_D19"></div>
+                <div class="days" id="M7_D20"></div>
+                <div class="days" id="M7_D21"></div>
+                <div class="days" id="M7_D22"></div>
+                <div class="days" id="M7_D23"></div>
+                <div class="days" id="M7_D24"></div>
+                <div class="days" id="M7_D25"></div>
+                <div class="days" id="M7_D26"></div>
+                <div class="days" id="M7_D27"></div>
+                <div class="days" id="M7_D28"></div>
+                <div class="days" id="M7_D29"></div>
+                <div class="days" id="M7_D30"></div>
+                <div class="days" id="M7_D31"></div>
+                
+            </div>
+        </div>
+        <div class="monthcontainer">
+            <h class="monthtext">August</h>
+            <div id = "8" class="month">
+                <div class="days" id="M8_D1"></div>
+                <div class="days" id="M8_D2"></div>
+                <div class="days" id="M8_D3"></div>
+                <div class="days" id="M8_D4"></div>
+                <div class="days" id="M8_D5"></div>
+                <div class="days" id="M8_D6"></div>
+                <div class="days" id="M8_D7"></div>
+                <div class="days" id="M8_D8"></div>
+                <div class="days" id="M8_D9"></div>
+                <div class="days" id="M8_D10"></div>
+                <div class="days" id="M8_D11"></div>
+                <div class="days" id="M8_D12"></div>
+                <div class="days" id="M8_D13"></div>
+                <div class="days" id="M8_D14"></div>
+                <div class="days" id="M8_D15"></div>
+                <div class="days" id="M8_D16"></div>
+                <div class="days" id="M8_D17"></div>
+                <div class="days" id="M8_D18"></div>
+                <div class="days" id="M8_D19"></div>
+                <div class="days" id="M8_D20"></div>
+                <div class="days" id="M8_D21"></div>
+                <div class="days" id="M8_D22"></div>
+                <div class="days" id="M8_D23"></div>
+                <div class="days" id="M8_D24"></div>
+                <div class="days" id="M8_D25"></div>
+                <div class="days" id="M8_D26"></div>
+                <div class="days" id="M8_D27"></div>
+                <div class="days" id="M8_D28"></div>
+                <div class="days" id="M8_D29"></div>
+                <div class="days" id="M8_D30"></div>
+                <div class="days" id="M8_D31"></div>                
+            </div>
+        </div>
+        <div class="monthcontainer">
+            <h class="monthtext">September</h>
+            <div id = "9" class="month">
+                <div class="days" id="M9_D1"></div>
+                <div class="days" id="M9_D2"></div>
+                <div class="days" id="M9_D3"></div>
+                <div class="days" id="M9_D4"></div>
+                <div class="days" id="M9_D5"></div>
+                <div class="days" id="M9_D6"></div>
+                <div class="days" id="M9_D7"></div>
+                <div class="days" id="M9_D8"></div>
+                <div class="days" id="M9_D9"></div>
+                <div class="days" id="M9_D10"></div>
+                <div class="days" id="M9_D11"></div>
+                <div class="days" id="M9_D12"></div>
+                <div class="days" id="M9_D13"></div>
+                <div class="days" id="M9_D14"></div>
+                <div class="days" id="M9_D15"></div>
+                <div class="days" id="M9_D16"></div>
+                <div class="days" id="M9_D17"></div>
+                <div class="days" id="M9_D18"></div>
+                <div class="days" id="M9_D19"></div>
+                <div class="days" id="M9_D20"></div>
+                <div class="days" id="M9_D21"></div>
+                <div class="days" id="M9_D22"></div>
+                <div class="days" id="M9_D23"></div>
+                <div class="days" id="M9_D24"></div>
+                <div class="days" id="M9_D25"></div>
+                <div class="days" id="M9_D26"></div>
+                <div class="days" id="M9_D27"></div>
+                <div class="days" id="M9_D28"></div>
+                <div class="days" id="M9_D29"></div>
+                <div class="days" id="M9_D30"></div>
+                
+            </div>
+        </div>
+        <div class="monthcontainer">
+            <h class="monthtext">October</h>
+            <div id = "10" class="month">
+                <div class="days" id="M10_D1"></div>
+                <div class="days" id="M10_D2"></div>
+                <div class="days" id="M10_D3"></div>
+                <div class="days" id="M10_D4"></div>
+                <div class="days" id="M10_D5"></div>
+                <div class="days" id="M10_D6"></div>
+                <div class="days" id="M10_D7"></div>
+                <div class="days" id="M10_D8"></div>
+                <div class="days" id="M10_D9"></div>
+                <div class="days" id="M10_D10"></div>
+                <div class="days" id="M10_D11"></div>
+                <div class="days" id="M10_D12"></div>
+                <div class="days" id="M10_D13"></div>
+                <div class="days" id="M10_D14"></div>
+                <div class="days" id="M10_D15"></div>
+                <div class="days" id="M10_D16"></div>
+                <div class="days" id="M10_D17"></div>
+                <div class="days" id="M10_D18"></div>
+                <div class="days" id="M10_D19"></div>
+                <div class="days" id="M10_D20"></div>
+                <div class="days" id="M10_D21"></div>
+                <div class="days" id="M10_D22"></div>
+                <div class="days" id="M10_D23"></div>
+                <div class="days" id="M10_D24"></div>
+                <div class="days" id="M10_D25"></div>
+                <div class="days" id="M10_D26"></div>
+                <div class="days" id="M10_D27"></div>
+                <div class="days" id="M10_D28"></div>
+                <div class="days" id="M10_D29"></div>
+                <div class="days" id="M10_D30"></div>
+                <div class="days" id="M10_D31"></div>
+                
+            </div>
+        </div>
+        <div class="monthcontainer">
+            <h class="monthtext">November</h>
+            <div id = "11" class="month">
+                <div class="days" id="M11_D1"></div>
+                <div class="days" id="M11_D2"></div>
+                <div class="days" id="M11_D3"></div>
+                <div class="days" id="M11_D4"></div>
+                <div class="days" id="M11_D5"></div>
+                <div class="days" id="M11_D6"></div>
+                <div class="days" id="M11_D7"></div>
+                <div class="days" id="M11_D8"></div>
+                <div class="days" id="M11_D9"></div>
+                <div class="days" id="M11_D10"></div>
+                <div class="days" id="M11_D11"></div>
+                <div class="days" id="M11_D12"></div>
+                <div class="days" id="M11_D13"></div>
+                <div class="days" id="M11_D14"></div>
+                <div class="days" id="M11_D15"></div>
+                <div class="days" id="M11_D16"></div>
+                <div class="days" id="M11_D17"></div>
+                <div class="days" id="M11_D18"></div>
+                <div class="days" id="M11_D19"></div>
+                <div class="days" id="M11_D20"></div>
+                <div class="days" id="M11_D21"></div>
+                <div class="days" id="M11_D22"></div>
+                <div class="days" id="M11_D23"></div>
+                <div class="days" id="M11_D24"></div>
+                <div class="days" id="M11_D25"></div>
+                <div class="days" id="M11_D26"></div>
+                <div class="days" id="M11_D27"></div>
+                <div class="days" id="M11_D28"></div>
+                <div class="days" id="M11_D29"></div>
+                <div class="days" id="M11_D30"></div>
+                
+            </div>
+        </div>
+        <div class="monthcontainer">
+            <h class="monthtext">December</h>
+            <div id = "12" class="month">
+                <div class="days" id="M12_D1"></div>
+                <div class="days" id="M12_D2"></div>
+                <div class="days" id="M12_D3"></div>
+                <div class="days" id="M12_D4"></div>
+                <div class="days" id="M12_D5"></div>
+                <div class="days" id="M12_D6"></div>
+                <div class="days" id="M12_D7"></div>
+                <div class="days" id="M12_D8"></div>
+                <div class="days" id="M12_D9"></div>
+                <div class="days" id="M12_D10"></div>
+                <div class="days" id="M12_D11"></div>
+                <div class="days" id="M12_D12"></div>
+                <div class="days" id="M12_D13"></div>
+                <div class="days" id="M12_D14"></div>
+                <div class="days" id="M12_D15"></div>
+                <div class="days" id="M12_D16"></div>
+                <div class="days" id="M12_D17"></div>
+                <div class="days" id="M12_D18"></div>
+                <div class="days" id="M12_D19"></div>
+                <div class="days" id="M12_D20"></div>
+                <div class="days" id="M12_D21"></div>
+                <div class="days" id="M12_D22"></div>
+                <div class="days" id="M12_D23"></div>
+                <div class="days" id="M12_D24"></div>
+                <div class="days" id="M12_D25"></div>
+                <div class="days" id="M12_D26"></div>
+                <div class="days" id="M12_D27"></div>
+                <div class="days" id="M12_D28"></div>
+                <div class="days" id="M12_D29"></div>
+                <div class="days" id="M12_D30"></div>
+                <div class="days" id="M12_D31"></div>                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

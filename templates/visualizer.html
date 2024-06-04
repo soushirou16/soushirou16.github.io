@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Strava Visualizer</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/strava.css') }}">
-    <script defer src="{{ url_for('static', filename='js/strava.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/strava.css">
+    <script defer src="/static/js/visualizer.js"></script>
     <style>
         body {
             background-color: #2C282F;
@@ -13,9 +13,7 @@
     </style>
 </head>
 <body>
-    <button id="authbutton">Authorize</button>
-    <button id="displaybutton">Display Data</button>
-    <h1 class="words">2024 Strava Visualizer</h1>
+    <h1 class="words">2024 Strava Activity Tracker</h1>
     <div class="text" id="moreinfodiv">
         <p></p>
         <p></p>

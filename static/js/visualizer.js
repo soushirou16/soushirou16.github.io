@@ -1,16 +1,15 @@
 
 
-// authorization button
-document.getElementById('authbutton').addEventListener('click', () => {
-    window.open('/authorize', '_blank', 'width=600,height=800');
-});
-
 
 var datadict = {}
 var totalMiles = 0;
 var totalElapsedTime = 0;
 // logic for displaying data. sends a call to api
-document.getElementById('displaybutton').addEventListener('click', function() {
+send_api_call();
+
+
+function send_api_call() {
+    // sends a call
     fetch('/athlete/activities')
     .then(response => {
         if (!response.ok) {
@@ -28,9 +27,9 @@ document.getElementById('displaybutton').addEventListener('click', function() {
         let todaysKey = convertToKey(todaysDate);
         
         let todaysDiv = document.getElementById(todaysKey);
-        todaysDiv.style.borderColor = "#7E1313";
+        todaysDiv.style.borderColor = "black";
         
-        
+        // organize the data
         data.forEach(activity => { 
             let date = new Date(activity.start_date);
             let key = convertToKey(date);
@@ -40,7 +39,7 @@ document.getElementById('displaybutton').addEventListener('click', function() {
             if (!datadict[key]){
                 datadict[key] = [];
             }
-
+            
             datadict[key].push({
                 'type': activity.type,
                 'date': date,
@@ -71,7 +70,7 @@ document.getElementById('displaybutton').addEventListener('click', function() {
         document.getElementById('totaltimetext').textContent += formattedTime;
 
     })
-});
+};
 
 
 // add the hover for more info functionality
@@ -135,7 +134,6 @@ function formatTime(seconds) {
     var minutes = Math.floor((seconds % 3600) / 60);
     var remainingSeconds = seconds % 60;
 
-    // Add leading zeros if necessary
     hours = (hours < 10) ? '0' + hours : hours;
     minutes = (minutes < 10) ? '0' + minutes : minutes;
     remainingSeconds = (remainingSeconds < 10) ? '0' + remainingSeconds : remainingSeconds;

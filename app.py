@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, url_for, session, jsonify, render_template
+from flask import Flask, request, redirect, url_for, render_template
 from requests_oauthlib import OAuth2Session
 import json
 
@@ -14,7 +14,11 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('strava.html')
+    return render_template('frontpage.html')
+
+@app.route('/visualizer')
+def visualizer():
+    return render_template('visualizer.html')
 
 
 @app.route('/authorize')
@@ -45,9 +49,9 @@ def callback():
 
             cache['access_token'] = token_response['access_token']
 
-            return "Successfully fetched token...", 200
-        else:
-            return "Failed to fetch or store token...", 400
+            return redirect('/visualizer')
+    # access token not received or user cancelled auth.
+    return redirect('/')
 
 
 @app.route('/athlete/activities')
@@ -65,13 +69,7 @@ def get_activities():
 
     response = strava.get("https://www.strava.com/api/v3/athlete/activities", params=param)
 
-    if response.status_code == 200:
-        activities = response.json()
-        return activities
-    else:
-        return 'Failed to fetch activities', response.status_code
-
-
+    return response.json()
 
 
 
