@@ -10,6 +10,7 @@
     align-items: center;
 
     color: #BFB2C8;
+    font-family: Arial, sans-serif;
     font-weight: bold;
 }
 
@@ -67,6 +68,8 @@
 }
 
 #tab-content{
+    font-family: Arial, sans-serif;
+    margin-left: 20px;
     color: white;
 }
 

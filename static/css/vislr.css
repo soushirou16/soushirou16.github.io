@@ -45,12 +45,14 @@ body, html {
     position: absolute;
     top: -100%;
     left: 0px; 
-    width: 200px;
+    width: 180px;
     height: 120px;
     background-color: #31343C;
     border-radius: 10px;
     opacity: 0;
     transition: opacity 0.3s ease;
     color: white;
+    text-align: center;
+    font-family: Arial, sans-serif;
 
   }

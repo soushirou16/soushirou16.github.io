@@ -1,3 +1,7 @@
+body, html {
+    margin: 0;
+    padding: 0;
+}
 
 
 .container {
@@ -104,4 +108,5 @@
     color: #BFB2C8;
     font-weight: bold;
     font-size: 30px;
+    font-family: Arial, sans-serif;
 }

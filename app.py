@@ -23,6 +23,9 @@ def visualizer():
 
 @app.route('/authorize')
 def authorize():
+    if 'access_token' in cache:
+        return redirect('visualizer')
+
     session = OAuth2Session(client_id=client_id, redirect_uri=url_for('callback', _external=True))
     session.scope = "activity:read_all"
     

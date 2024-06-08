@@ -50,7 +50,7 @@ function fetch_activities() {
         });        
         display_data(datadict, total_meters, total_elapsed_time);
     })
-};
+}
 
 function display_data(datadict, total_meters, total_elapsed_time){
     const elements = Array.from(document.querySelectorAll('.days'));
@@ -133,7 +133,6 @@ function display_stats_data(total_meters, total_elapsed_time, ran_streak, miss_s
     document.getElementById('stattxt_miss_streak').textContent += miss_streak + " days";
 }
 
-
 function fetch_athlete() {
     fetch('/athlete')
     .then(response => {
@@ -151,7 +150,7 @@ function fetch_athlete() {
         document.getElementById('userpfp').src = pfp_url;
 
     })
-};
+}
 
 function set_hover_events(){
     var days = document.getElementsByClassName('days');
@@ -176,15 +175,14 @@ function mouseover(event) {
         moreInfoDiv.style.left = cursorX + 40 + 'px';
         moreInfoDiv.style.top = cursorY + + -70 + 'px';
 
-        let elapsedTimeInMinutes = datadict[currentDayID][0]['elapsed_time'] / 60;
-        let minutes = Math.floor(elapsedTimeInMinutes);
-        let seconds = Math.floor((elapsedTimeInMinutes - minutes) * 60);
-        let formattedSeconds = (seconds < 10 ? '0' : '') + seconds;
-        let formattedTime = minutes + ':' + formattedSeconds + " min";
+        let elapsed_time_in_sec = datadict[currentDayID][0]['elapsed_time'];
+
+        let distance_miles = datadict[currentDayID][0]['distance'] / 1600;
+        let distance_km = datadict[currentDayID][0]['distance'] / 1000;
 
         childDivs[0].textContent = datadict[currentDayID][0]['date'];
-        childDivs[1].textContent = (datadict[currentDayID][0]['distance'] / 1600).toFixed(2) + " miles"+ "\t" + "(" + formattedTime + ")";
-        childDivs[2].textContent;
+        childDivs[1].textContent = (distance_miles).toFixed(2) + " miles / " + (distance_km).toFixed(2) + " km";
+        childDivs[2].textContent = calculatePace(elapsed_time_in_sec, distance_miles) + " / " + calculatePace(elapsed_time_in_sec, distance_km);
 
         timeout = setTimeout(function(){
         moreInfoDiv.style.opacity = '100'; 
@@ -228,4 +226,22 @@ function formatTime(seconds) {
 function toggleSideTab() {
     var stats_tab = document.getElementById("stats_tab_id");
     stats_tab.classList.toggle('open');
+}
+
+function calculatePace(elapsedTimeInSeconds, distance) {
+    // Convert elapsed time from seconds to minutes
+    let elapsedTimeInMinutes = elapsedTimeInSeconds / 60;
+    
+    // Calculate pace in minutes per mile
+    let paceInMinutesPerMile = elapsedTimeInMinutes / distance;
+    
+    // Convert pace to minutes and seconds
+    let totalSeconds = paceInMinutesPerMile * 60;
+    let minutes = Math.floor(totalSeconds / 60);
+    let seconds = Math.round(totalSeconds % 60);
+    
+    // Ensure seconds are always displayed with two digits
+    let formattedSeconds = String(seconds).padStart(2, '0');
+    
+    return `${minutes}:${formattedSeconds}`;
 }
