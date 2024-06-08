@@ -3,7 +3,7 @@
 .container {
     background-color: #20242b;
     width: 55%;
-    margin: 0 auto;
+    margin: 70px auto;
     padding: 20px;
     border-radius: 20px;
     display: grid; 
@@ -81,7 +81,7 @@
     height: 50px;
     width: 200px;
     margin-left: 56%; /* Center the button horizontally */
-    margin-top: 12%; /* Center the button horizontally */
+    margin-top: 13%; /* Center the button horizontally */
     background-image: url('/static/images/con_with_strava.png');
     background-size: cover;
     background-position: center;

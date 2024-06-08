@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Strava Visualizer</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/vislr.css">
+    <link rel="stylesheet" href="/static/css/vislr.css">
+    <link rel="stylesheet" href="/static/css/days_coloring.css">
+    <link rel="stylesheet" href="/static/css/header_stats.css">
+
     <script defer src="/static/js/vislr.js"></script>
     <style>
         body {
@@ -13,14 +16,31 @@
     </style>
 </head>
 <body>
-    
+
     <div id="header">
-        <div id="left-content">
+        <button id="stats_button" onclick="toggleSideTab()"></button>
+        <p id="stattxt">More info...</p>
+        <div id="title">
             2024 Strava Activity Tracker
         </div>
-        <div id="right-content">
-            <div id="username">User's Name</div>
-            <img id=userpfp src="path_to_your_image.jpg" alt="Profile Picture">
+        <div id="user">
+            <div id="username"></div>
+            <img id=userpfp>
+        </div>
+    </div>
+    
+
+
+    <div class="stats_tab" id="stats_tab_id">
+        <div id="tab-content">
+            <h2>General Statistics</h2>
+            <p id="stattxt_distance">Total Distance: </p>
+            <p id="stattxt_time">Total Elapsed Time: </p>
+            <div class="empty-line"></div>
+            <p id="stattxt_ran_streak">Longest consecutive days ran: </p>
+            <p id="stattxt_miss_streak">Longest consecutive days missed: </p>
+            <div class="empty-line"></div>
+            
         </div>
     </div>
     
@@ -469,10 +489,6 @@
                 <div class="days" id="M12_D31"></div>                
             </div>
         </div>
-    </div>
-    <div id="statscontainer">
-        <p id='totalmilestext'>Total Miles: </p>
-        <p id='totaltimetext'>Total Elapsed Time: </p>
     </div>
 </body>
 

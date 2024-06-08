@@ -1,0 +1,52 @@
+.days{
+    width: 80%;
+    height: 20px;
+    background-color: #A7A7A7;
+    border-radius: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid transparent;
+    transition: background-color 1s;
+    transition: transform 0.3s ease;
+
+}
+
+.days:hover {
+    transform: scale(1.1);
+}
+
+.green1 {
+    background-color: #a8e3b9;
+}
+
+.green2 {
+    background-color: #8ad08f;
+}
+
+.green3 {
+    background-color: #6ab573;
+}
+
+.green4 {
+    background-color: #539f59;
+}
+
+.green5 {
+    background-color: #418b45;
+}
+
+.green6 {
+    background-color: #327631;
+}
+
+.green7 {
+    background-color: #245e1f;
+}
+
+.missed{
+    background-color: #7D7D7D;
+}
+
+.gray{
+    background-color: #A7A7A7;
+}
