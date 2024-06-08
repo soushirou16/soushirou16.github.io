@@ -71,6 +71,18 @@ def get_activities():
 
     return response.json()
 
+@app.route('/athlete')
+def get_athlete():
+    # Ensure the user is authenticated
+    if 'access_token' not in cache:
+        return 'not auth'
+    
+    strava = OAuth2Session(client_id, token=cache)
+    response = strava.get("https://www.strava.com/api/v3/athlete")
+
+    return response.json()
+
+
 
 
 if __name__ == '__main__':

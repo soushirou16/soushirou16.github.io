@@ -4,16 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Strava Visualizer</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/strava.css">
-    <script defer src="/static/js/visualizer.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/vislr.css">
+    <script defer src="/static/js/vislr.js"></script>
     <style>
         body {
-            background-color: #2C282F;
+            background-color: #1d2026;
         }
     </style>
 </head>
 <body>
-    <h1 class="words">2024 Strava Activity Tracker</h1>
+    
+    <div id="header">
+        <div id="left-content">
+            2024 Strava Activity Tracker
+        </div>
+        <div id="right-content">
+            <div id="username">User's Name</div>
+            <img id=userpfp src="path_to_your_image.jpg" alt="Profile Picture">
+        </div>
+    </div>
+    
+
     <div class="text" id="moreinfodiv">
         <p></p>
         <p></p>
@@ -23,6 +34,7 @@
 
         </div>
     </div>
+
     <div class="container">
         <div class="monthcontainer">
             <h class="monthtext">January</h>

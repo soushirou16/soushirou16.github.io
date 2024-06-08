@@ -1,12 +1,7 @@
-.words {
-    color: #BFB2C8;
-    text-align: center;
-    user-select: none;
-}
 
 
 .container {
-    background-color: #f0f0f0;
+    background-color: #20242b;
     width: 55%;
     margin: 0 auto;
     padding: 20px;
@@ -37,6 +32,7 @@
     font-size: large;
     font-family: Arial, sans-serif;
     user-select: none;
+    color: #BFB2C8;
 }
 
 
@@ -56,8 +52,8 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: #2D2B2F;
-    opacity: 90%;
+    background-color: #16181c;
+    opacity: 80%;
     top: 0px;
     left: 0px; 
 }
@@ -69,22 +65,43 @@
     margin: 0;
 }
 
-#filtertextbox{
-    margin-top: 10%;
+#filtertextbox {
+    position: absolute;
+    top: 30%;
+    left: 50%; 
+     /* Translate the element back by half of its own width and height */
+    transform: translate(-50%, -50%);
+    align-items: center; 
+    justify-content: center
 }
 
-
-#button{
+#button {
     position: absolute;
     border-radius: 5px;
     height: 50px;
     width: 200px;
-    margin-top: 6.5%;
-    margin-left: 54%;
+    margin-left: 56%; /* Center the button horizontally */
+    margin-top: 12%; /* Center the button horizontally */
     background-image: url('/static/images/con_with_strava.png');
     background-size: cover;
     background-position: center;
     border: none;
     outline: none;
     cursor: pointer;
+}
+
+#header {
+    width: 100%;
+    height: 70px;
+    background-color: #16181C;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center; /* Align items vertically */
+    justify-content: center;
+
+    color: #BFB2C8;
+    font-weight: bold;
+    font-size: 30px;
 }

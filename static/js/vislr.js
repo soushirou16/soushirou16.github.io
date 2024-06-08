@@ -1,14 +1,19 @@
 
 
-
 var datadict = {}
 var totalMiles = 0;
 var totalElapsedTime = 0;
+var moreInfoDiv = document.getElementById("moreinfodiv");
+var childDivs = moreInfoDiv.querySelectorAll("p");
+var timeout;
+
 // logic for displaying data. sends a call to api
-send_api_call();
+fetch_activities();
+set_hover_event();
+fetch_athlete();
 
 
-function send_api_call() {
+function fetch_activities() {
     // sends a call
     fetch('/athlete/activities')
     .then(response => {
@@ -26,8 +31,9 @@ function send_api_call() {
         let todaysDate = new Date();
         let todaysKey = convertToKey(todaysDate);
         
+        // box the current day so it's easy to see
         let todaysDiv = document.getElementById(todaysKey);
-        todaysDiv.style.borderColor = "black";
+        todaysDiv.style.borderColor = "#FF6E6E";
         
         // organize the data
         data.forEach(activity => { 
@@ -64,20 +70,16 @@ function send_api_call() {
                 currDay.classList.add('lvl4green');
             }
         });        
-        document.getElementById('totalmilestext').textContent += (totalMiles/1600).toFixed(2) + " miles";
+        /*document.getElementById('totalmilestext').textContent += (totalMiles/1600).toFixed(2) + " miles";
 
         var formattedTime = formatTime(totalElapsedTime);
         document.getElementById('totaltimetext').textContent += formattedTime;
+        */
 
     })
 };
 
-
 // add the hover for more info functionality
-var moreInfoDiv = document.getElementById("moreinfodiv");
-var childDivs = moreInfoDiv.querySelectorAll("p");
-var timeout;
-
 function handleDayHover(event) {
     let currentDay = this;
     let currentDayID = currentDay.id;
@@ -107,19 +109,43 @@ function handleDayHover(event) {
     }
 }
 
-var days = document.getElementsByClassName('days');
-for (var i = 0; i < days.length; i++) {
-    days[i].addEventListener("mouseover", handleDayHover);
-    days[i].addEventListener('mousemove', function(event){
-        moreInfoDiv.style.left = event.clientX + 40 + 'px';
-        moreInfoDiv.style.top = event.clientY + + -70 + 'px';
-    });
+// anotha one
+function set_hover_event(){
+    var days = document.getElementsByClassName('days');
+    for (var i = 0; i < days.length; i++) {
+        days[i].addEventListener("mouseover", handleDayHover);
+        days[i].addEventListener('mousemove', function(event){
+            moreInfoDiv.style.left = event.clientX + 40 + 'px';
+            moreInfoDiv.style.top = event.clientY + + -70 + 'px';
+        });
 
-    days[i].addEventListener("mouseout", function(){
-        moreInfoDiv.style.opacity = '0';
-        clearTimeout(timeout);
-    });
+        days[i].addEventListener("mouseout", function(){
+            moreInfoDiv.style.opacity = '0';
+            clearTimeout(timeout);
+        });
+    }
 }
+
+
+function fetch_athlete() {
+    fetch('/athlete')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to fetch activities');
+        }
+        
+        return response.json();
+    })
+    .then(data => {
+        let name = data.firstname + " " + data.lastname;
+        let pfp_url = data.profile;
+
+        document.getElementById('username').textContent = name;
+        document.getElementById('userpfp').src = pfp_url;
+
+    })
+};
+
 
 
 function convertToKey(startDate){
