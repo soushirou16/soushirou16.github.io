@@ -1,59 +1,129 @@
 
+// run it when the page is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    handleAuthorization();
+    set_hover_events();
+});
 
 var datadict={}
-var timeout;
+var timeout = 0;
 
 
-fetch_activities();
-set_hover_events();
-fetch_athlete();
+// runs through oauth process + fetches data
+async function handleAuthorization() {
 
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const code = urlParams.get('code');
 
-function fetch_activities() {
-    // sends a call
-    fetch('/athlete/activities')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Failed to fetch activities');
+    if (getAccessToken() != null){
+        fetchActivities();
+    }
+    else {
+        if (code) {
+            await exchangeCodeForToken(code);
+        } else {
+            window.location.href = "http://localhost:5000/fp.html";
+            // could be rate limit too...
         }
-        
-        return response.json();
-    })
-    .then(data => {
-        // track total mileage
-        let total_meters = 0;
-        let total_elapsed_time = 0;
-
-        // organize the data
-        data.forEach(activity => { 
-            let date = new Date(activity.start_date);
-            let key = convertToKey(date);
-            let formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
-
-                
-            if (!datadict[key]){
-                datadict[key] = [];
-            }
-        
-            
-            datadict[key].push({
-                'type': activity.type,
-                'date': formattedDate,
-                'distance': activity.distance,
-                'elapsed_time': activity.elapsed_time,
-                'start_time': activity.start_date_local
-            });
-
-            total_meters += activity.distance;
-            total_elapsed_time += activity.elapsed_time;
-            
-        });        
-        display_data(datadict, total_meters, total_elapsed_time);
-    })
+    }
 }
 
-function display_data(datadict, total_meters, total_elapsed_time){
+async function exchangeCodeForToken(code) {
+    const clientId = "126877";
+    const clientSecret = "988cc2b69cdee2fc1da49deac39f4b9eee6a5bb3"; 
+    const redirectUri = "http://localhost:5000/visualizer.html";
+
+    const tokenUrl = 'https://www.strava.com/api/v3/oauth/token';
+
+    const response = await fetch(tokenUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            client_id: clientId,
+            client_secret: clientSecret,
+            code: code,
+            grant_type: 'authorization_code',
+            redirect_uri: redirectUri
+        })
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('strava_access_token', data.access_token);
+        fetchActivities();
+
+    } else {
+
+        // error exchanging. maybe make a new html file to redirect to?
+        document.getElementById("title").textContent = "1not noice";
+
+    }
+}
+
+async function fetchActivities() {
+    fetchAthlete();
+    const accessToken = getAccessToken();
+
+    const params = new URLSearchParams({
+        'per_page': 200,
+        'after': 1704110400
+    });
+    
+    const url = `https://www.strava.com/api/v3/athlete/activities?${params}`;
+
+
+    const response = await fetch(url, {
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
+        }
+    });
+
+
+    if (response.ok) {
+        const activities = await response.json();
+        store_activities(activities);
+    } else {
+        console.error('Error fetching activities:', response.statusText);
+    }
+}
+
+function store_activities(activities) {
+    let total_elapsed_time = 0;
+    let total_meters = 0;
+    let i = 0;
+
+    activities.forEach(activity => {
+        let date = new Date(activity.start_date);
+        let key = convertToKey(date);
+        let formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+
+        if (!datadict[key]){
+            datadict[key] = [];
+        }
+
+        datadict[key].push({
+            'type': activity.type,
+            'date': formattedDate,
+            'distance': activity.distance,
+            'elapsed_time': activity.elapsed_time,
+            'start_time': activity.start_date_local
+        });
+
+        total_meters += activity.distance;
+        total_elapsed_time += activity.elapsed_time;
+        i++;
+
+    })
+
+    color_activities(total_meters, total_elapsed_time);
+}
+
+function color_activities(total_meters, total_elapsed_time){
     const elements = Array.from(document.querySelectorAll('.days'));
+
 
     let todaysDate = new Date();
     let todaysKey = convertToKey(todaysDate);
@@ -62,9 +132,10 @@ function display_data(datadict, total_meters, total_elapsed_time){
     let miss_streak = 0;
     let ran_counter = 0;
     let miss_counter = 0;
+
     
 
-    for(let i = 0; i < elements.length; i++){   
+    for (let i = 0; i < elements.length; i++){   
         const id = elements[i].id;
         let curr_day = document.getElementById(id);
         let avg_distance = total_meters / Object.keys(datadict).length;
@@ -118,40 +189,34 @@ function display_data(datadict, total_meters, total_elapsed_time){
             curr_day.classList.add('missed');
         }
     }
-    display_stats_data(total_meters, total_elapsed_time, ran_streak, miss_streak)
+    display_stats_data(total_meters, total_elapsed_time, ran_streak, miss_streak);
+
 
 }
 
-function display_stats_data(total_meters, total_elapsed_time, ran_streak, miss_streak){
-    document.getElementById('stattxt_distance').textContent 
-    += Math.round(total_meters/1600) + " miles / " + Math.round(total_meters/1000) + " km";
+async function fetchAthlete() {
+    const accessToken = getAccessToken();
 
-    document.getElementById('stattxt_time').textContent
-    += Math.round(total_elapsed_time/3600) + " hours, " + Math.round(total_elapsed_time % 60) + " min spent running";
-
-    document.getElementById('stattxt_ran_streak').textContent += ran_streak + " days";
-    document.getElementById('stattxt_miss_streak').textContent += miss_streak + " days";
-}
-
-function fetch_athlete() {
-    fetch('/athlete')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Failed to fetch activities');
+    const response = await fetch('https://www.strava.com/api/v3/athlete', {
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
         }
-        
-        return response.json();
-    })
-    .then(data => {
-        let name = data.firstname + " " + data.lastname;
-        let pfp_url = data.profile;
+    });
 
+    if (response.ok) {
+        const athlete = await response.json();
+        let name = athlete.firstname + " " + athlete.lastname;
+        let pfp_url = athlete.profile;
+        
         document.getElementById('username').textContent = name;
         document.getElementById('userpfp').src = pfp_url;
 
-    })
+    } else {
+        console.error('Error fetching athlete:', response.statusText);
+    }
 }
 
+// hover functions
 function set_hover_events(){
     var days = document.getElementsByClassName('days');
     for (var i = 0; i < days.length; i++) {
@@ -160,8 +225,8 @@ function set_hover_events(){
         days[i].addEventListener("mouseout", mouseout);
     }
 }
-
 function mouseover(event) {
+    
     let currentDay = this;
     let currentDayID = currentDay.id;
 
@@ -191,26 +256,29 @@ function mouseover(event) {
         moreInfoDiv.style.opacity = '0';
     }
 }
-
 function mousemove(event){
     var moreInfoDiv = document.getElementById("moreinfodiv");
     moreInfoDiv.style.left = event.clientX + 40 + 'px';
     moreInfoDiv.style.top = event.clientY + + -70 + 'px';
 }
-
 function mouseout(){
     var moreInfoDiv = document.getElementById("moreinfodiv");
     moreInfoDiv.style.opacity = '0';
     clearTimeout(timeout);
 }
 
-function convertToKey(startDate){
-    let month = (startDate.getMonth() + 1).toString(); 
-    let day = startDate.getDate().toString();
+
+
+// helper methods
+function convertToKey(date){
+    let month = (date.getMonth() + 1).toString(); 
+    let day = date.getDate().toString();
     let key = "M" + month + "_D" + day;
     return key;
 }
-
+function getAccessToken() {
+    return localStorage.getItem('strava_access_token');
+}
 function formatTime(seconds) {
     var hours = Math.floor(seconds / 3600);
     var minutes = Math.floor((seconds % 3600) / 60);
@@ -223,11 +291,22 @@ function formatTime(seconds) {
     return hours + ':' + minutes + ':' + remainingSeconds;
 }
 
+
+// side bar functions
 function toggleSideTab() {
     var stats_tab = document.getElementById("stats_tab_id");
     stats_tab.classList.toggle('open');
 }
+function display_stats_data(total_meters, total_elapsed_time, ran_streak, miss_streak){
+    document.getElementById('stattxt_distance').textContent 
+    += Math.round(total_meters/1600) + " miles / " + Math.round(total_meters/1000) + " km";
 
+    document.getElementById('stattxt_time').textContent
+    += Math.round(total_elapsed_time/3600) + " hours, " + Math.round(total_elapsed_time % 60) + " min spent running";
+
+    document.getElementById('stattxt_ran_streak').textContent += ran_streak + " days";
+    document.getElementById('stattxt_miss_streak').textContent += miss_streak + " days";
+}
 function calculatePace(elapsedTimeInSeconds, distance) {
     // Convert elapsed time from seconds to minutes
     let elapsedTimeInMinutes = elapsedTimeInSeconds / 60;

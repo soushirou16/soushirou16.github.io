@@ -59,12 +59,8 @@ def callback():
 
 @app.route('/athlete/activities')
 def get_activities():
-    # Ensure the user is authenticated
-    if 'access_token' not in cache:
-        return 'not auth'
-
+    
     strava = OAuth2Session(client_id, token=cache)
-
     param = {
         'per_page': '200',
         'after': '1704110400'
@@ -76,9 +72,6 @@ def get_activities():
 
 @app.route('/athlete')
 def get_athlete():
-    # Ensure the user is authenticated
-    if 'access_token' not in cache:
-        return 'not auth'
     
     strava = OAuth2Session(client_id, token=cache)
     response = strava.get("https://www.strava.com/api/v3/athlete")
