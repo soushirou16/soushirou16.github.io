@@ -1,31 +1,23 @@
 
-// run it when the page is loaded
 document.addEventListener('DOMContentLoaded', function() {
     handleAuthorization();
     set_hover_events();
 });
 
-var datadict={}
+var datadict = {};
 var timeout = 0;
 
-
-// runs through oauth process + fetches data
 async function handleAuthorization() {
-
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const code = urlParams.get('code');
+    
+    const accessToken = getAccessToken();
 
-    if (getAccessToken() != null){
+    if (accessToken) {
         fetchActivities();
-    }
-    else {
-        if (code) {
-            await exchangeCodeForToken(code);
-        } else {
-            window.location.href = "http://localhost:5000/fp.html";
-            // could be rate limit too...
-        }
+    } else if (code) {
+        await exchangeCodeForToken(code);
     }
 }
 
@@ -33,7 +25,6 @@ async function exchangeCodeForToken(code) {
     const clientId = "126877";
     const clientSecret = "988cc2b69cdee2fc1da49deac39f4b9eee6a5bb3"; 
     const redirectUri = "http://localhost:5000/visualizer.html";
-
     const tokenUrl = 'https://www.strava.com/api/v3/oauth/token';
 
     const response = await fetch(tokenUrl, {
@@ -53,19 +44,17 @@ async function exchangeCodeForToken(code) {
     if (response.ok) {
         const data = await response.json();
         localStorage.setItem('strava_access_token', data.access_token);
+        localStorage.setItem('strava_refresh_token', data.refresh_token);
+        localStorage.setItem('strava_token_expires_at', data.expires_at);
         fetchActivities();
-
     } else {
-
-        // error exchanging. maybe make a new html file to redirect to?
-        document.getElementById("title").textContent = "1not noice";
-
+        // handle error, maybe redirect to an error page?
+        window.location.href = "http://localhost:5000/index.html";
     }
 }
 
 async function fetchActivities() {
-    fetchAthlete();
-    const accessToken = getAccessToken();
+    const accessToken = await getAccessToken();
 
     const params = new URLSearchParams({
         'per_page': 200,
@@ -74,23 +63,43 @@ async function fetchActivities() {
     
     const url = `https://www.strava.com/api/v3/athlete/activities?${params}`;
 
-
     const response = await fetch(url, {
         headers: {
             'Authorization': `Bearer ${accessToken}`
         }
     });
 
-
     if (response.ok) {
         const activities = await response.json();
         store_activities(activities);
+        fetchAthlete();
     } else {
-        console.error('Error fetching activities:', response.statusText);
+        localStorage.clear();
+        window.location.href = "http://localhost:5000/index.html";
+    }
+}
+
+async function fetchAthlete() {
+    const accessToken = await getAccessToken();
+
+    const response = await fetch('https://www.strava.com/api/v3/athlete', {
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
+        }
+    });
+
+    if (response.ok) {
+        const athlete = await response.json();
+        let name = athlete.firstname + " " + athlete.lastname;
+        let pfp_url = athlete.profile;
+        
+        document.getElementById('username').textContent = name;
+        document.getElementById('userpfp').src = pfp_url;
     }
 }
 
 function store_activities(activities) {
+    
     let total_elapsed_time = 0;
     let total_meters = 0;
     let i = 0;
@@ -121,7 +130,7 @@ function store_activities(activities) {
     color_activities(total_meters, total_elapsed_time);
 }
 
-function color_activities(total_meters, total_elapsed_time){
+async function color_activities(total_meters, total_elapsed_time){
     const elements = Array.from(document.querySelectorAll('.days'));
 
 
@@ -188,84 +197,14 @@ function color_activities(total_meters, total_elapsed_time){
 
             curr_day.classList.add('missed');
         }
+        // adds delay in between each coloration
+        await new Promise(resolve => setTimeout(resolve, 1));
     }
     display_stats_data(total_meters, total_elapsed_time, ran_streak, miss_streak);
 
 
 }
 
-async function fetchAthlete() {
-    const accessToken = getAccessToken();
-
-    const response = await fetch('https://www.strava.com/api/v3/athlete', {
-        headers: {
-            'Authorization': `Bearer ${accessToken}`
-        }
-    });
-
-    if (response.ok) {
-        const athlete = await response.json();
-        let name = athlete.firstname + " " + athlete.lastname;
-        let pfp_url = athlete.profile;
-        
-        document.getElementById('username').textContent = name;
-        document.getElementById('userpfp').src = pfp_url;
-
-    } else {
-        console.error('Error fetching athlete:', response.statusText);
-    }
-}
-
-// hover functions
-function set_hover_events(){
-    var days = document.getElementsByClassName('days');
-    for (var i = 0; i < days.length; i++) {
-        days[i].addEventListener("mouseover", mouseover);
-        days[i].addEventListener('mousemove', mousemove);
-        days[i].addEventListener("mouseout", mouseout);
-    }
-}
-function mouseover(event) {
-    
-    let currentDay = this;
-    let currentDayID = currentDay.id;
-
-    var moreInfoDiv = document.getElementById("moreinfodiv");
-    var childDivs = moreInfoDiv.querySelectorAll("p");
-    
-    if (datadict[currentDayID] && datadict[currentDayID].length > 0) {
-        let cursorX = event.clientX;
-        let cursorY = event.clientY;
-
-        moreInfoDiv.style.left = cursorX + 40 + 'px';
-        moreInfoDiv.style.top = cursorY + + -70 + 'px';
-
-        let elapsed_time_in_sec = datadict[currentDayID][0]['elapsed_time'];
-
-        let distance_miles = datadict[currentDayID][0]['distance'] / 1600;
-        let distance_km = datadict[currentDayID][0]['distance'] / 1000;
-
-        childDivs[0].textContent = datadict[currentDayID][0]['date'];
-        childDivs[1].textContent = (distance_miles).toFixed(2) + " miles / " + (distance_km).toFixed(2) + " km";
-        childDivs[2].textContent = calculatePace(elapsed_time_in_sec, distance_miles) + " / " + calculatePace(elapsed_time_in_sec, distance_km);
-
-        timeout = setTimeout(function(){
-        moreInfoDiv.style.opacity = '100'; 
-        }, 350);
-    } else {
-        moreInfoDiv.style.opacity = '0';
-    }
-}
-function mousemove(event){
-    var moreInfoDiv = document.getElementById("moreinfodiv");
-    moreInfoDiv.style.left = event.clientX + 40 + 'px';
-    moreInfoDiv.style.top = event.clientY + + -70 + 'px';
-}
-function mouseout(){
-    var moreInfoDiv = document.getElementById("moreinfodiv");
-    moreInfoDiv.style.opacity = '0';
-    clearTimeout(timeout);
-}
 
 
 
@@ -276,27 +215,55 @@ function convertToKey(date){
     let key = "M" + month + "_D" + day;
     return key;
 }
+
+async function refreshAccessToken() {
+    const clientId = "126877";
+    const clientSecret = "988cc2b69cdee2fc1da49deac39f4b9eee6a5bb3"; 
+    const refreshToken = localStorage.getItem('strava_refresh_token');
+    const tokenUrl = 'https://www.strava.com/api/v3/oauth/token';
+
+    const response = await fetch(tokenUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            client_id: clientId,
+            client_secret: clientSecret,
+            refresh_token: refreshToken,
+            grant_type: 'refresh_token'
+        })
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('strava_access_token', data.access_token);
+        localStorage.setItem('strava_refresh_token', data.refresh_token);
+        localStorage.setItem('strava_token_expires_at', data.expires_at);
+        return data.access_token;
+    } else {
+        // Handle error, maybe redirect to an error page
+        console.error('Error refreshing access token:', response.statusText);
+        return null;
+    }
+}
+
 function getAccessToken() {
-    return localStorage.getItem('strava_access_token');
+    const token = localStorage.getItem('strava_access_token');
+    const expiresAt = localStorage.getItem('strava_token_expires_at');
+    const currentTime = Math.floor(Date.now() / 1000);
+
+    if (token && expiresAt && currentTime < expiresAt) {
+        return token;
+    } else if (token && expiresAt && currentTime >= expiresAt) {
+        return refreshAccessToken();
+    } else {
+        return null;
+    }
 }
-function formatTime(seconds) {
-    var hours = Math.floor(seconds / 3600);
-    var minutes = Math.floor((seconds % 3600) / 60);
-    var remainingSeconds = seconds % 60;
-
-    hours = (hours < 10) ? '0' + hours : hours;
-    minutes = (minutes < 10) ? '0' + minutes : minutes;
-    remainingSeconds = (remainingSeconds < 10) ? '0' + remainingSeconds : remainingSeconds;
-
-    return hours + ':' + minutes + ':' + remainingSeconds;
-}
 
 
-// side bar functions
-function toggleSideTab() {
-    var stats_tab = document.getElementById("stats_tab_id");
-    stats_tab.classList.toggle('open');
-}
+// side bar stats
 function display_stats_data(total_meters, total_elapsed_time, ran_streak, miss_streak){
     document.getElementById('stattxt_distance').textContent 
     += Math.round(total_meters/1600) + " miles / " + Math.round(total_meters/1000) + " km";

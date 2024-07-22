@@ -1,11 +1,7 @@
 background();
 
-// Authorization button
-document.getElementById('button').addEventListener('click', () => {
-    authorize();
-});
 
-
+// starts auth process
 async function authorize() {
     const clientId = "126877";
     const redirectUri = "http://localhost:5000/visualizer.html";
