@@ -4,7 +4,7 @@ background();
 // starts auth process
 async function authorize() {
     const clientId = "126877";
-    const redirectUri = "http://localhost:5000/visualizer.html";
+    const redirectUri = "http://soushirou16.github.io/visualizer.html";
     const authUrl = `https://www.strava.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=activity:read_all`;
 
     window.location.href = authUrl;

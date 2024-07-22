@@ -24,7 +24,7 @@ async function handleAuthorization() {
 async function exchangeCodeForToken(code) {
     const clientId = "126877";
     const clientSecret = "988cc2b69cdee2fc1da49deac39f4b9eee6a5bb3"; 
-    const redirectUri = "http://localhost:5000/visualizer.html";
+    const redirectUri = "https://soushirou16.github.io/visualizer.html";
     const tokenUrl = 'https://www.strava.com/api/v3/oauth/token';
 
     const response = await fetch(tokenUrl, {
@@ -49,7 +49,7 @@ async function exchangeCodeForToken(code) {
         fetchActivities();
     } else {
         // handle error, maybe redirect to an error page?
-        window.location.href = "http://localhost:5000/index.html";
+        window.location.href = "https://soushirou16.github.io/index.html";
     }
 }
 
@@ -75,7 +75,7 @@ async function fetchActivities() {
         fetchAthlete();
     } else {
         localStorage.clear();
-        window.location.href = "http://localhost:5000/index.html";
+        window.location.href = "https://soushirou16.github.io/index.html";
     }
 }
 
