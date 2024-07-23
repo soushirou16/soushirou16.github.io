@@ -38,9 +38,6 @@ body, html {
 }
 
 
-
-
-
 #moreinfodiv {
     position: absolute;
     top: -100%;
@@ -54,5 +51,4 @@ body, html {
     color: white;
     text-align: center;
     font-family: Arial, sans-serif;
-
   }

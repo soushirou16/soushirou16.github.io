@@ -205,7 +205,19 @@ async function color_activities(total_meters, total_elapsed_time){
 
 }
 
+async function deauthorize() {
+    const accessToken = getAccessToken();
+    const deauthorizeUrl = `https://www.strava.com/oauth/deauthorize?access_token=${accessToken}`;
 
+    const response = await fetch(deauthorizeUrl, {
+        method: 'POST'
+    });
+
+    if (response.ok) {
+        localStorage.clear();
+        window.location.href = "https://soushirou16.github.io/index.html";
+    }
+}
 
 
 // helper methods
