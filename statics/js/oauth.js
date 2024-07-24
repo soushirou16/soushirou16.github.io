@@ -219,7 +219,6 @@ async function deauthorize() {
     }
 }
 
-
 // helper methods
 function convertToKey(date){
     let month = (date.getMonth() + 1).toString(); 

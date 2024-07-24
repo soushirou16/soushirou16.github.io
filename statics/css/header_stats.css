@@ -77,6 +77,11 @@
     font-weight: bold;
 }
 
+#deauth-button:hover {
+    background-color: #14171c;
+    cursor: pointer;
+}
+
 #tab-content{
     font-family: Arial, sans-serif;
     margin-left: 20px;
